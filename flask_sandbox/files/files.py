@@ -2,14 +2,14 @@ from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 
 
-user_bp = Blueprint(
-    name="user",
+files_bp = Blueprint(
+    name="files",
     import_name=__name__,
     template_folder="templates",
 )
 
 
-@user_bp.route('/profile')
+@files_bp.route('/upload')
 @login_required
-def profile():
-    return render_template('user/profile.html', name=current_user.name)
+def upload():
+    return render_template('files/upload.html', name=current_user.name)

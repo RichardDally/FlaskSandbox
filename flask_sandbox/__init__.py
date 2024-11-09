@@ -7,6 +7,7 @@ import secrets
 from flask_sandbox.general.general import general_bp
 from flask_sandbox.auth.auth import auth_bp
 from flask_sandbox.user.user import user_bp
+from flask_sandbox.files.files import files_bp
 
 
 def create_app():
@@ -30,12 +31,13 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        # since the user_id is just the primary key of our user table, use it in the query for the user
+        # since the user_id is just the primary key of our videos table, use it in the query for the videos
         return User.query.get(int(user_id))
 
     # Registering blue prints
     app.register_blueprint(general_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
+    app.register_blueprint(files_bp)
 
     return app

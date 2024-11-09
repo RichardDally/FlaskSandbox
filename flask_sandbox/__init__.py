@@ -1,22 +1,26 @@
 import os
 from flask import Flask
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
-
-
-# init SQLAlchemy so we can use it later in our models
-db = SQLAlchemy()
+from .database import db
+import secrets
+from flask_sandbox.general.general import general_bp
+from flask_sandbox.auth.auth import auth_bp
+from flask_sandbox.user.user import user_bp
 
 
 def create_app():
     app = Flask(__name__)
 
     load_dotenv()
-    app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY")
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY", secrets.token_urlsafe(16))
+    # In-memory  : sqlite:///:memory:
+    # Local file : sqlite:///flask_sandbox.db
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///flask_sandbox.db")
 
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -29,12 +33,9 @@ def create_app():
         # since the user_id is just the primary key of our user table, use it in the query for the user
         return User.query.get(int(user_id))
 
-    # blueprint for auth routes in our app
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
-
-    # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    # Registering blue prints
+    app.register_blueprint(general_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(user_bp)
 
     return app

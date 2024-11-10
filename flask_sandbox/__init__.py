@@ -10,6 +10,7 @@ from flask_sandbox.general.general import general_bp
 from flask_sandbox.auth.auth import auth_bp
 from flask_sandbox.user.user import user_bp
 from flask_sandbox.files.files import files_bp
+from flask_sandbox.trading.trading import trading_bp
 
 
 def create_app():
@@ -79,5 +80,6 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(files_bp)
+    app.register_blueprint(trading_bp)
 
     return app

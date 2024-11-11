@@ -11,6 +11,7 @@ from flask_sandbox.auth.auth import auth_bp
 from flask_sandbox.user.user import user_bp
 from flask_sandbox.files.files import files_bp
 from flask_sandbox.trading.trading import trading_bp
+from .debug_bootstrap import create_dummy_user
 
 
 def create_app():
@@ -59,10 +60,13 @@ def create_app():
     app.config['SECRET_KEY'] = flask_secret_key
     app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
     app.config['UPLOAD_FOLDER'] = upload_folder
+    app.logger.info(f"Starting with SQLALCHEMY_DATABASE_URI={sqlalchemy_database_uri}")
 
     db.init_app(app)
     with app.app_context():
         db.create_all()
+        # Create a dummy user (only for in-memory db)
+        create_dummy_user()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

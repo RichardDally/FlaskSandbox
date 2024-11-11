@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, current_app
 from flask_login import login_required, current_user
 from flask_sandbox import db
-from flask_sandbox.models import Trading
-
+from flask_sandbox.models import Trading, User
 
 trading_bp = Blueprint(
     name="trading",
@@ -15,5 +14,8 @@ trading_bp = Blueprint(
 @login_required
 def balance():
     with current_app.app_context():
-        trading = db.session.execute(db.session.execute(db.select(Trading)))
-    return render_template('trading/balance.html')
+        current_app.logger.warning(current_user.email)
+        q = db.session.query(User, Trading).filter(User.email == current_user.email).filter(User.id == Trading.user_id).first()
+        if q:
+            balance = q[1].balance
+        return render_template('trading/stock.html', balance=balance)

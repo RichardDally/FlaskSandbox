@@ -16,3 +16,7 @@ venv\Scripts\activate
 uv pip install -r requirements.txt
 flask --app flask_sandbox run
 ````
+
+## Bulma template gallery
+
+https://bulmatemplates.github.io/bulma-templates/

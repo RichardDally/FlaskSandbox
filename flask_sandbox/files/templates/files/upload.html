@@ -1,14 +1,17 @@
 {% extends "general/base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Upload your file
-</h1>
 
-<div class="file">
-  <label class="file-label">
-    <input class="file-input" type="file" name="resume" />
-    <span class="file-cta">
+<div class="hero-body">
+  <div class="container has-text-centered">
+    <h1 class="title">
+      Upload your file
+    </h1>
+
+    <div class="file">
+      <label class="file-label">
+        <input class="file-input" type="file" name="resume" />
+        <span class="file-cta">
       <span class="file-icon">
         <i class="fas fa-upload"></i>
       </span>
@@ -17,23 +20,25 @@
         <input class="button" type=submit value=Upload>
       </form>
     </span>
-  </label>
+      </label>
+    </div>
+
+
+
+    {% if info %}
+    <div class="notification is-primary">
+      {{ info }}
+    </div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+      {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+  </div>
 </div>
-
-
-
-{% if info %}
-<div class="notification is-primary">
-  {{ info }}
-</div>
-{% endif %}
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<div class="notification is-danger">
-  {{ messages[0] }}
-</div>
-{% endif %}
-{% endwith %}
 
 {% endblock %}

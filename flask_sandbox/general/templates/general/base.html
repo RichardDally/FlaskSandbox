@@ -5,60 +5,77 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Flask Auth Example</title>
+    <title>Flask Sandbox</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" />
 </head>
 
 <body>
-<section class="hero is-info is-fullheight">
 
-    <div class="hero-head">
-        <nav class="navbar">
-            <div class="container">
-                <div id="navbarMenuHeroB" class="navbar-menu">
-                    <div class="navbar-end">
-                        <a href="{{ url_for('general.index') }}" class="navbar-item">
-                            Home
-                        </a>
-                    </div>
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('user.profile') }}" class="navbar-item">
-                        Profile
+<!-- START NAV -->
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <img src="https://cdn.emk.dev/templates/bulma-logo-light.png" alt="Logo">
+            </a>
+            <span class="navbar-burger burger" data-target="navbarMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item is-active">
+                    <a href="{{ url_for('general.index') }}" class="navbar-item">
+                        Home
                     </a>
-                    {% endif %}
-                    {% if not current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.login') }}" class="navbar-item">
-                        Login
-                    </a>
-                    <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                        Sign Up
-                    </a>
-                    {% endif %}
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('files.upload') }}" class="navbar-item">
-                        Upload
-                    </a>
-                    {% endif %}
-                    <a href="{{ url_for('trading.balance') }}" class="navbar-item">
-                        Balance
-                    </a>
-                    {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                        Logout
-                    </a>
-                    {% endif %}
-                </div>
+                </a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user.profile') }}" class="navbar-item">
+                    Profile
+                </a>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                    Login
+                </a>
+                <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                    Sign Up
+                </a>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('files.upload') }}" class="navbar-item">
+                    Upload
+                </a>
+                {% endif %}
+                <a href="{{ url_for('trading.balance') }}" class="navbar-item">
+                    Balance
+                </a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                    Logout
+                </a>
+                {% endif %}
             </div>
-        </nav>
-    </div>
-
-    <div class="hero-body">
-        <div class="container has-text-centered">
-            {% block content %}
-            {% endblock %}
         </div>
     </div>
-</section>
+</nav>
+<!-- END NAV -->
+
+{% block content %}
+{% endblock %}
+
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Flask Sandbox</strong> by Richard Dally.
+            </p>
+        </div>
+    </div>
+</footer>
+
 </body>
 
 </html>

@@ -1,7 +1,14 @@
 {% extends "general/base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Welcome, {{ name }}!
-</h1>
+
+<div class="hero-body">
+  <div class="container has-text-centered">
+    <h1 class="title">
+      You currently have {{ balance }}$
+    </h1>
+  </div>
+</div>
+
+
 {% endblock %}

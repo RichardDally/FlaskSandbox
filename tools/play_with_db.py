@@ -13,8 +13,7 @@ with app.app_context():
     trading = Trading(balance=1000.0, user=user)
     db.session.add(user)
     db.session.add(trading)
-
     db.session.commit()
 
-    q = db.session.query(User, Trading).filter(User.name == "richard").filter(User.id == Trading.user_id).first()
+    q = db.session.query(User, Trading).filter(User.email == "richard@test.com").filter(User.id == Trading.user_id).first()
     print(f"name={q[0].name} balance={q[1].balance}")

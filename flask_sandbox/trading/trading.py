@@ -14,8 +14,11 @@ trading_bp = Blueprint(
 @login_required
 def balance():
     with current_app.app_context():
-        current_app.logger.warning(current_user.email)
         q = db.session.query(User, Trading).filter(User.email == current_user.email).filter(User.id == Trading.user_id).first()
         if q:
             balance = q[1].balance
-        return render_template('trading/stock.html', balance=balance)
+            current_app.logger.info(f"current_user={User.name} balance={balance}")
+            return render_template('trading/stock.html', balance=balance)
+
+        current_app.logger.critical(q)
+        return render_template('trading/stock.html', balance="N/A")

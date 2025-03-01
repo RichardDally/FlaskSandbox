@@ -11,7 +11,7 @@ from flask_sandbox.auth.auth import auth_bp
 from flask_sandbox.user.user import user_bp
 from flask_sandbox.files.files import files_bp
 from flask_sandbox.trading.trading import trading_bp
-from .debug_bootstrap import create_dummy_user
+from flask_sandbox.user.create_new_user import create_new_user_in_db
 
 
 def create_app():
@@ -66,7 +66,12 @@ def create_app():
     with app.app_context():
         db.create_all()
         # Create a dummy user (only for in-memory db)
-        create_dummy_user()
+        create_new_user_in_db(
+            username="Nestor",
+            clear_password="test",
+            email="nestor@moulinsart.be",
+            balance=1000.0,
+        )
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

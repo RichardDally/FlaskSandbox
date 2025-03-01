@@ -62,15 +62,11 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('auth.signup'))
 
-    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(
-        name=name,
-        password=generate_password_hash(password=password),
+    insert_new_user_in_db(
+        username=name,
+        clear_password=password,
         email=email,
+        balance=1000.0,
     )
-
-    # add the new user to the database
-    db.session.add(new_user)
-    db.session.commit()
 
     return redirect(url_for('auth.login'))
